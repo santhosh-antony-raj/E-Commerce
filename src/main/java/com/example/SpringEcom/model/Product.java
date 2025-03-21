@@ -1,14 +1,10 @@
 package com.example.SpringEcom.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 
 @Entity
@@ -22,24 +18,15 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private String category;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date releaseDate;
     private Boolean productAvailable;
     private String stockQuantity;
 
-    public Product() {
-    }
-
-    public Product(int id, String name, String description, String brand, BigDecimal price, String category, Date releaseDate, Boolean productAvailable, String stockQuantity) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.brand = brand;
-        this.price = price;
-        this.category = category;
-        this.releaseDate = releaseDate;
-        this.productAvailable = productAvailable;
-        this.stockQuantity = stockQuantity;
-    }
+    private String imageName;
+    private String imageType;
+    @Lob
+    private byte[] imageData;
 
     @Override
     public String toString() {
@@ -53,7 +40,53 @@ public class Product {
                 ", releaseDate=" + releaseDate +
                 ", productAvailable=" + productAvailable +
                 ", stockQuantity='" + stockQuantity + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", imageType='" + imageType + '\'' +
+                ", imageData=" + Arrays.toString(imageData) +
                 '}';
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
+
+
+    public Product(int i) {
+    }
+    public Product(){
+
+    }
+
+    public Product(int id, String name, String description, String brand, BigDecimal price, String category, Date releaseDate, Boolean productAvailable, String stockQuantity) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.brand = brand;
+        this.price = price;
+        this.category = category;
+        this.releaseDate = releaseDate;
+        this.productAvailable = productAvailable;
+        this.stockQuantity = stockQuantity;
     }
 
     public int getId() {
