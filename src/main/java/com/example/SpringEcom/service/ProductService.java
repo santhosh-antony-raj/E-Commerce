@@ -21,10 +21,19 @@ public class ProductService {
         return productRepo.findById(id).orElse(null);
     }
 
-    public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
+    public Product addOrUpdateProduct(Product product, MultipartFile imageFile) throws IOException {
         product.setImageName(imageFile.getOriginalFilename());
         product.setImageType(imageFile.getContentType());
         product.setImageData(imageFile.getBytes());
         return productRepo.save(product);
+    }
+
+
+    public void deleteProductById(int id) {
+        productRepo.deleteById(id);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword);
     }
 }
